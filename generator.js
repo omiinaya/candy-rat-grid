@@ -28,14 +28,67 @@ function setup() {
   }
   available = grid;                               //saving as available
   current = grid[0];
-  //console.log(current);
 }
+
+var layout = [
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  7, 11, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
+  7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
+  7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
+  7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
+  7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
+  7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
+  7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
+  7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
+  7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
+  7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
+  7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
+  7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
+  7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
+  10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 9, 
+]
 
 function draw() {
   background("#000000");                          //sets background black
   for (var i = 0; i < grid.length; i++) {         //for every element in the grid
     grid[i].show();                               //draw grid
-  }
+    //top, right, bottom, left
+    if (layout[i] == 1) {
+    grid[i].walls = [true, false, false, false] 
+    } 
+    else if (layout[i] == 2) {
+      grid[i].walls = [true, true, false, false]
+    }
+    else if (layout[i] == 3) {
+      grid[i].walls = [true, true, true, false]
+    }
+    else if (layout[i] == 4) {
+      grid[i].walls = [true, true, true, true]
+    }
+    else if (layout[i] == 5) {
+      grid[i].walls = [false, true, true, true]
+    }
+    else if (layout[i] == 6) {
+      grid[i].walls = [false, false, true, true]
+    }
+    else if (layout[i] == 7) {
+      grid[i].walls = [false, false, false, true]
+    }
+    else if (layout[i] == 8) {
+      grid[i].walls = [false, false, false, false]
+    }
+    else if (layout[i] == 9) {
+      grid[i].walls = [false, true, false, false]
+    }
+    else if (layout[i] == 10) {
+      grid[i].walls = [false, false, true, false]
+    }
+    else if (layout[i] == 11) {
+      grid[i].walls = [true, false, false, true]
+    }
+}
+
+
 
   if (wallsRemoved < cols * rows - 1) {           //checks if any walls have been removed at all
     //defines selected to allow player movement
@@ -45,10 +98,9 @@ function draw() {
     if (grid[grid.length - 1].id === selected.id) reset();
 
     if (!current.isFinished) {                    //if there are no walls to be removed
-      current.highlight();                        //makes targeted cell blue
-      neighbor = current.rightNeighbor();
+      
 
-      selected.walls = [false, false, false, false]
+      //selected.walls = [false, false, false, false]
     }
   }
 }
@@ -97,8 +149,9 @@ if (grid[grid.length - 1].id === selected.id) reset();                          
 //cell.j == y coord
 function keyPressed() {
   if (key == 'R' || key == 'r') {
-    cursorX = 0;
-    cursorY = 0;
+    //cursorX = 0;
+    //cursorY = 0;
+    console.log(cells)
   }
   else if ((key == 'W' || key == 'w') && cursorY > 0) {
     if (!selected.walls[0]) {
