@@ -1,16 +1,15 @@
 //
-//                                                //walls in grid object are defined as [0]top, [1]right, [2]bottom, [3]left.
-//GENERAL NOTES                                   //isFinished means there are no walls to be removed.
-//                                                //neighbor and current are individual cells. currently picked at random.
+//                                                
+//GENERAL NOTES                                   //walls in grid object are defined as [0]top, [1]right, [2]bottom, [3]left.
+//                                            
 //
 var cols, rows;
 var w = 20;                                       //width of each cell
 var grid = [];                                    //grid object
-var sets = []
+var sets = [];                                    //still no fucking idea what this does but seems important
 var cursorX = 0;                                  //starting x coordinate of player
 var cursorY = 0;                                  //starting y coordinate of player
-var selected;
-var wallsRemoved = 0;                             //keeps count to remove a total of 255 walls
+var selected;                                     //variable that holds current player position
 
 function setup() {
   createCanvas(300, 300);                         //canvas width and hegiht
@@ -21,7 +20,7 @@ function setup() {
     for (var i = 0; i < cols; i++) {              //for loop runs 15 times to create 15 cols
       var cell = new Cell(i, j);                  //class that defines the cell
       grid.push(cell);                            //pushing cell to grid
-      sets.push([cell.id])                        ////unsure what sets is for.
+      sets.push([cell.id])                        //pushing cell.ids to sets
     }
   }
 }
@@ -130,50 +129,38 @@ function draw() {
   selected = grid.filter(cell => (cell.i === cursorX && cell.j === cursorY))[0];
   selected.highlight();                                                                  //mark player blue
   grid[grid.length - 1].highlight(true);                                                 //mark last cell red
-  if (grid[grid.length - 1].id === selected.id) reset();
+  if (grid[grid.length - 1].id === selected.id) reset();                                 //on red touch, reset
 
 }
 
+
 function keyPressed() {
   if (key == 'R' || key == 'r') {
-    //cursorX = 0;
-    //cursorY = 0;
-    console.log(cells)
+    cursorX = 0;
+    cursorY = 0;
   }
   else if ((key == 'W' || key == 'w') && cursorY > 0) {
     if (!selected.walls[0]) {
       console.log(selected)
       cursorY--;
-      //console.log(grid)
     }
   } else if ((key == 'A' || key == 'a') && cursorX > 0) {
     if (!selected.walls[3]) {
       console.log(selected)
       cursorX--;
-      //console.log(grid)
     }
   } else if ((key == 'S' || key == 's') && cursorY < rows - 1) {
     if (!selected.walls[2]) {
       console.log(selected)
       cursorY++;
-      //console.log(grid)
     }
   } else if ((key == 'D' || key == 'd') && cursorX < cols - 1) {
     if (!selected.walls[1]) {
       console.log(selected)
       cursorX++;
-      //console.log(grid)
     }
   }
 }
-
-function index(i, j) {
-  if (i < 0 || j < 0 || i > cols - 1 || j > rows - 1) {
-    return -1;
-  }
-  return i + j * cols;
-}
-
 
 function removeWalls(current, neighbor) {
   var x = current.i - neighbor.i;
@@ -200,7 +187,6 @@ function reset() {
   cursorX = 0;
   cursorY = 0;
   sets = [];
-  wallsRemoved = 0;
   for (var j = 0; j < rows; j++) {
     for (var i = 0; i < cols; i++) {
       var cell = new Cell(i, j);
@@ -208,6 +194,4 @@ function reset() {
       sets.push([cell.id])
     }
   }
-  available = grid;
-  current = grid[int(random(0, (rows * cols)))];
 }
