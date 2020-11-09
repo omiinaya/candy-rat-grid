@@ -21,21 +21,21 @@ function setup() {
 }
 
 var layout = [                                    //variable that holds our map
-  11, 1, 1, 8, 1, 1, 1, 8, 1, 1, 1, 8, 1, 1, 2,
-  12, 11, 2, 12, 0, 0, 12, 12, 12, 0, 0, 12, 15, 2, 12,
-  12, 6, 11, 8, 14, 14, 14, 8, 14, 14, 14, 8, 2, 5, 12,
-  8, 14, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 14, 8,
-  12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12,
-  12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12,
-  8, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 8,
+  11, 01, 01, 08, 01, 01, 01, 08, 01, 01, 01, 08, 01, 01, 02,
+  12, 11, 02, 12, 08, 08, 03, 12, 08, 08, 03, 12, 15, 02, 12,
+  12, 06, 11, 08, 14, 14, 14, 08, 14, 14, 14, 08, 02, 05, 12,
+  08, 14, 10, 00, 00, 00, 00, 00, 00, 00, 00, 00, 10, 14, 08,
+  12, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 12,
   12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12,
   8, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 8,
   12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12,
+  8, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 8,
   12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12,
-  8, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 14, 8,
-  12, 11, 2, 12, 0, 0, 0, 0, 0, 0, 0, 12, 11, 2, 12,
+  12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12,
+  8, 14, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 14, 8,
+  12, 11, 6, 8, 0, 0, 0, 0, 0, 0, 0, 12, 11, 2, 12,
   12, 6, 13, 12, 0, 0, 12, 0, 12, 0, 0, 12, 6, 13, 12,
-  6, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 13,
+  6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 13,
 ]
 
 function draw() {
@@ -46,47 +46,47 @@ function draw() {
     //order: top, right, bottom, left
 
     //top, bottom
-    if (layout[i] == 1) {
+    if (layout[i] == 01) {
       grid[i].walls = [true, false, true, false]
     }
 
     //top, right
-    else if (layout[i] == 2) {
+    else if (layout[i] == 02) {
       grid[i].walls = [true, true, false, false]
     }
 
     //top, right, bottom
-    else if (layout[i] == 3) {
+    else if (layout[i] == 03) {
       grid[i].walls = [true, true, true, false]
     }
 
     //top, right, bottom, left
-    else if (layout[i] == 4) {
+    else if (layout[i] == 04) {
       grid[i].walls = [true, true, true, true]
     }
 
     //right, bottom, left
-    else if (layout[i] == 5) {
+    else if (layout[i] == 05) {
       grid[i].walls = [false, true, true, true]
     }
 
     //bottom, left
-    else if (layout[i] == 6) {
+    else if (layout[i] == 06) {
       grid[i].walls = [false, false, true, true]
     }
 
     //left
-    else if (layout[i] == 7) {
+    else if (layout[i] == 07) {
       grid[i].walls = [false, false, false, true]
     }
 
     //no walls
-    else if (layout[i] == 8) {
+    else if (layout[i] == 08) {
       grid[i].walls = [false, false, false, false]
     }
 
     //right
-    else if (layout[i] == 9) {
+    else if (layout[i] == 09) {
       grid[i].walls = [false, true, false, false]
     }
 
