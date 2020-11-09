@@ -5,9 +5,9 @@
 //
 var cols, rows;
 var w = 20;                                       //width of each cell
-var grid = [];            
+var grid = [];
 var available = [];
-var current;                                      
+var current;
 var cursorX = 0;                                  //starting x coordinate of player
 var cursorY = 0;                                  //starting y coordinate of player
 var selected;
@@ -16,8 +16,8 @@ var wallsRemoved = 0;                             //keeps count to remove a tota
 
 function setup() {
   createCanvas(300, 300);                         //canvas width and hegiht
-  cols = floor(width/w);                          //columns = 300/20 = 15
-  rows = floor(height/w);                         //rows = 300/20 = 15
+  cols = floor(width / w);                          //columns = 300/20 = 15
+  rows = floor(height / w);                         //rows = 300/20 = 15
 
   for (var j = 0; j < rows; j++) {                //for loop runs 15 times to create 15 rows
     for (var i = 0; i < cols; i++) {              //for loop runs 15 times to create 15 cols
@@ -27,8 +27,8 @@ function setup() {
     }
   }
   available = grid;                               //saving as available
-  current = grid[int(random(0,(rows*cols)))];
-  console.log(current);
+  current = grid[int(random(0, (rows * cols)))];
+  //console.log(current);
 }
 
 function draw() {
@@ -37,8 +37,7 @@ function draw() {
     grid[i].show();                               //draw grid
   }
 
-  
-  if (wallsRemoved < cols*rows - 1) {             //checks if any walls have been removed at all
+  if (wallsRemoved < cols * rows - 1) {           //checks if any walls have been removed at all
     if (!current.isFinished) {                    //if there are no walls to be removed
       current.highlight();                        //makes targeted cell blue
       // CHOOSE RANDOM NEIGHBOR
@@ -47,20 +46,20 @@ function draw() {
       if (neighbor) {
         // FIND THE SETS THAT CURRENT AND NEIGHBOR ARE IN
         for (var i = 0; i < sets.length; i++) {
-         if (sets[i].includes(current.id)) {
-          mergedSet = sets[i];
-         }
-         else if (sets[i].includes(neighbor.id)) {
-          removedSet = sets[i];
-          removedIndex = i;
-         }
+          if (sets[i].includes(current.id)) {
+            mergedSet = sets[i];
+          }
+          else if (sets[i].includes(neighbor.id)) {
+            removedSet = sets[i];
+            removedIndex = i;
+          }
         }
         // ADD NEIGHBOR TO CURRENT SET (UNION THE CELLS) AND DELETE NEIGHBOR'S SET
-        if(removedSet !== undefined) {
+        if (removedSet !== undefined) {
           for (var i = 0; i < removedSet.length; i++) {
             mergedSet.push(removedSet[i]);
           }
-          sets.splice(removedIndex,1);
+          sets.splice(removedIndex, 1);
           // REMOVE WALLS FROM BETWEEN CURRENT AND NEIGHBOR
           removeWalls(current, neighbor);
         }
@@ -70,12 +69,12 @@ function draw() {
       }
     }
     // need to adjust to iterate not randomize.
-    current = available[int(random(0,available.length))];
+    current = available[int(random(0, available.length))];
   } else {
     selected = grid.filter(cell => (cell.i === cursorX && cell.j === cursorY))[0];
-    selected.highlight();                                                               //makes player blue
-    grid[grid.length-1].highlight(true);
-    if(grid[grid.length-1].id === selected.id) reset();                                 //if you reach the end, reset.
+    selected.highlight();                                                                  //mark player blue
+    grid[grid.length - 1].highlight(true);                                                 //mark last cell red
+    if (grid[grid.length - 1].id === selected.id) reset();                                 //if you reach the end, reset.
   }
 
 }
@@ -83,30 +82,30 @@ function draw() {
 // cell.i == x coord
 //cell.j == y coord
 function keyPressed() {
-  if (key == 'R' || key =='r') {
+  if (key == 'R' || key == 'r') {
     cursorX = 0;
     cursorY = 0;
   }
   else if ((key == 'W' || key == 'w') && cursorY > 0) {
-    if(!selected.walls[0]) {
+    if (!selected.walls[0]) {
       console.log(selected)
       cursorY--;
       //console.log(grid)
     }
   } else if ((key == 'A' || key == 'a') && cursorX > 0) {
-    if(!selected.walls[3]) {
+    if (!selected.walls[3]) {
       console.log(selected)
       cursorX--;
       //console.log(grid)
     }
-  } else if ((key == 'S' || key == 's') && cursorY < rows-1) {
-    if(!selected.walls[2]) {
+  } else if ((key == 'S' || key == 's') && cursorY < rows - 1) {
+    if (!selected.walls[2]) {
       console.log(selected)
       cursorY++;
       //console.log(grid)
     }
-  } else if ((key == 'D' || key == 'd') && cursorX < cols-1) {
-    if(!selected.walls[1]) {
+  } else if ((key == 'D' || key == 'd') && cursorX < cols - 1) {
+    if (!selected.walls[1]) {
       console.log(selected)
       cursorX++;
       //console.log(grid)
@@ -115,7 +114,7 @@ function keyPressed() {
 }
 
 function index(i, j) {
-  if (i < 0 || j < 0 || i > cols-1 || j > rows-1) {
+  if (i < 0 || j < 0 || i > cols - 1 || j > rows - 1) {
     return -1;
   }
   return i + j * cols;
@@ -156,5 +155,5 @@ function reset() {
     }
   }
   available = grid;
-  current = grid[int(random(0,(rows*cols)))];
+  current = grid[int(random(0, (rows * cols)))];
 }
