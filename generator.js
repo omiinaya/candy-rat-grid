@@ -52,46 +52,76 @@ function draw() {
   background("#000000");                          //sets background black
   for (var i = 0; i < grid.length; i++) {         //for every element in the grid
     grid[i].show();                               //draw grid
-    //top, right, bottom, left
+
+    
+    //order: top, right, bottom, left
+    
+    //top, bottom
     if (layout[i] == 1) {
     grid[i].walls = [true, false, true, false] 
     } 
+
+    //top, right
     else if (layout[i] == 2) {
       grid[i].walls = [true, true, false, false]
     }
+
+    //top, right, bottom
     else if (layout[i] == 3) {
       grid[i].walls = [true, true, true, false]
     }
+
+    //top, right, bottom, left
     else if (layout[i] == 4) {
       grid[i].walls = [true, true, true, true]
     }
+
+    //right, bottom, left
     else if (layout[i] == 5) {
       grid[i].walls = [false, true, true, true]
     }
+
+    //bottom, left
     else if (layout[i] == 6) {
       grid[i].walls = [false, false, true, true]
     }
+
+    //left
     else if (layout[i] == 7) {
       grid[i].walls = [false, false, false, true]
     }
+
+    //no walls
     else if (layout[i] == 8) {
       grid[i].walls = [false, false, false, false]
     }
+
+    //right
     else if (layout[i] == 9) {
       grid[i].walls = [false, true, false, false]
     }
+
+    //bottom
     else if (layout[i] == 10) {
       grid[i].walls = [false, false, true, false]
     }
+
+    //top, left
     else if (layout[i] == 11) {
       grid[i].walls = [true, false, false, true]
     }
+
+    //right, left
     else if (layout[i] == 12) {
       grid[i].walls = [false, true, false, true]
     }
+
+    //right, bottom
     else if (layout[i] == 13) {
       grid[i].walls = [false, true, true, false]
     }
+
+    //top, bottom
     else if (layout[i] == 14) {
       grid[i].walls = [true, false, true, false]
     }
