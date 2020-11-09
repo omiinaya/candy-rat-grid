@@ -1,11 +1,11 @@
-//                                                //walls are counted [0]top, [1]right, [2]bottom, [3]left.
-//GENERAL NOTES 
+//                                                //walls in grid object are defined as [0]top, [1]right, [2]bottom, [3]left.
+//GENERAL NOTES                                   
 //
 var cols, rows;
 var w = 20;                                       //width of each cell
 var grid = [];            
 var available = [];
-var current;
+var current;                                      
 var cursorX = 0;                                  //starting x coordinate of player
 var cursorY = 0;                                  //starting y coordinate of player
 var selected;
