@@ -16,8 +16,8 @@ var wallsRemoved = 0;                             //keeps count to remove a tota
 
 function setup() {
   createCanvas(300, 300);                         //canvas width and hegiht
-  cols = floor(width / w);                          //columns = 300/20 = 15
-  rows = floor(height / w);                         //rows = 300/20 = 15
+  cols = floor(width / w);                        //columns = 300/20 = 15
+  rows = floor(height / w);                       //rows = 300/20 = 15
 
   for (var j = 0; j < rows; j++) {                //for loop runs 15 times to create 15 rows
     for (var i = 0; i < cols; i++) {              //for loop runs 15 times to create 15 cols
@@ -27,7 +27,7 @@ function setup() {
     }
   }
   available = grid;                               //saving as available
-  current = grid[int(random(0, (rows * cols)))];
+  current = grid[0];
   //console.log(current);
 }
 
@@ -40,7 +40,13 @@ function draw() {
   if (wallsRemoved < cols * rows - 1) {           //checks if any walls have been removed at all
     if (!current.isFinished) {                    //if there are no walls to be removed
       current.highlight();                        //makes targeted cell blue
+      neighbor = current.rightNeighbor();
+      console.log(neighbor)
+    }
+  }
+}
       // CHOOSE RANDOM NEIGHBOR
+      /*
       var neighbor = current.randomNeighbor();
       var mergedSet, removedSet, removedIndex;
       if (neighbor) {
@@ -78,6 +84,7 @@ function draw() {
   }
 
 }
+*/
 
 // cell.i == x coord
 //cell.j == y coord
