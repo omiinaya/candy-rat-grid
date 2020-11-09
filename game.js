@@ -1,42 +1,62 @@
-var cols, rows;
-var w = 40;                                       //width of each cell
-var grid = [];                                    //grid object
-var sets = [];                                    //still no fucking idea what this does but seems important
-var cursorX = 0;                                  //starting x coordinate of player
-var cursorY = 0;                                  //starting y coordinate of player
-var selected;                                     //variable that holds current player position
+var cols, rows;                                                     //inititing cols and rows
+var w = 40;                                                         //width of each cell
+var grid = [];                                                      //grid object
+var sets = [];                                                      //still no clue what sets does exactly but it works
+var cursorX = 0;                                                    //starting x coordinate of player
+var cursorY = 0;                                                    //starting y coordinate of player
+var selected;                                                       //variable that holds current player position
 
 function setup() {
-  createCanvas(600, 600);                         //canvas width and hegiht
-  cols = floor(width / w);                        //columns = 300/20 = 15
-  rows = floor(height / w);                       //rows = 300/20 = 15
+  createCanvas(600, 600);                                           //initiate a canvas with width and hegiht
+  cols = floor(width / w);                                          //defining columns = 300/20 = 15
+  rows = floor(height / w);                                         //defining rows = 300/20 = 15
 
-  for (var j = 0; j < rows; j++) {                //for loop runs 15 times to create 15 rows
-    for (var i = 0; i < cols; i++) {              //for loop runs 15 times to create 15 cols
-      var cell = new Cell(i, j);                  //class that defines the cell
-      grid.push(cell);                            //pushing cell to grid
-      sets.push([cell.id])                        //pushing cell.ids to sets
+  for (var j = 0; j < rows; j++) {                                  //for loop runs 15 times to create 15 rows
+    for (var i = 0; i < cols; i++) {                                //for loop runs 15 times to create 15 cols
+      var cell = new Cell(i, j);                                    //class that defines the cell
+      grid.push(cell);                                              //pushing cell to grid
+      sets.push([cell.id])                                          //pushing cell.ids to sets
     }
   }
 }
 
-var layout = [                                    //variable that holds our map
+var layout = [                                                      //variable that holds our map
 //01  02  03  04  05  06  07  08  09  10  11  12  13  14  15
-  11, 01, 01, 08, 01, 01, 01, 08, 01, 01, 01, 08, 01, 01, 02,
-  12, 11, 02, 12, 15, 14, 03, 12, 15, 14, 03, 12, 15, 02, 12,
-  12, 06, 11, 10, 14, 14, 17, 10, 17, 14, 14, 10, 02, 05, 12,
-  08, 14, 09, 11, 14, 03, 12, 16, 12, 15, 14, 02, 07, 14, 08,
-  12, 16, 12, 12, 11, 14, 09, 12, 06, 14, 02, 12, 12, 16, 12,
-  12, 05, 12, 05, 12, 16, 12, 06, 14, 03, 12, 05, 12, 05, 12,
-  08, 14, 10, 17, 13, 12, 07, 17, 17, 14, 10, 17, 10, 14, 08,
-  12, 15, 03, 12, 15, 13, 07, 08, 09, 11, 03, 12, 15, 03, 12,
-  08, 14, 17, 10, 17, 14, 10, 10, 09, 12, 11, 10, 17, 14, 08,
-  12, 16, 12, 16, 12, 15, 14, 02, 12, 05, 12, 16, 12, 16, 12,
-  12, 05, 12, 12, 06, 14, 02, 12, 07, 14, 13, 12, 12, 05, 12,
-  08, 14, 09, 06, 01, 03, 12, 05, 12, 15, 14, 13, 07, 14, 08,
-  12, 11, 06, 17, 14, 14, 10, 17, 10, 14, 14, 17, 13, 02, 12,
-  12, 06, 13, 12, 15, 01, 03, 12, 15, 01, 01, 12, 06, 13, 12,
-  06, 01, 01, 08, 01, 01, 01, 08, 01, 01, 01, 08, 01, 01, 13,
+  11, 01, 01, 08, 01, 01, 01, 08, 01, 01, 01, 08, 01, 01, 02, //01
+  12, 11, 02, 12, 15, 14, 03, 12, 15, 14, 03, 12, 15, 02, 12, //02
+  12, 06, 11, 10, 14, 14, 17, 10, 17, 14, 14, 10, 02, 05, 12, //03
+  08, 14, 09, 11, 14, 03, 12, 16, 12, 15, 14, 02, 07, 14, 08, //04
+  12, 16, 12, 12, 11, 14, 09, 12, 06, 14, 02, 12, 12, 16, 12, //05
+  12, 05, 12, 05, 12, 16, 12, 06, 14, 03, 12, 05, 12, 05, 12, //06
+  08, 14, 10, 17, 13, 12, 07, 17, 17, 14, 10, 17, 10, 14, 08, //07
+  12, 15, 03, 12, 15, 13, 07, 08, 09, 11, 03, 12, 15, 03, 12, //08
+  08, 14, 17, 10, 17, 14, 10, 10, 09, 12, 11, 10, 17, 14, 08, //09
+  12, 16, 12, 16, 12, 15, 14, 02, 12, 05, 12, 16, 12, 16, 12, //10
+  12, 05, 12, 12, 06, 14, 02, 12, 07, 14, 13, 12, 12, 05, 12, //11
+  08, 14, 09, 06, 01, 03, 12, 05, 12, 15, 14, 13, 07, 14, 08, //12
+  12, 11, 06, 17, 14, 14, 10, 17, 10, 14, 14, 17, 13, 02, 12, //13
+  12, 06, 13, 12, 15, 01, 03, 12, 15, 01, 01, 12, 06, 13, 12, //14
+  06, 01, 01, 08, 01, 01, 01, 08, 01, 01, 01, 08, 01, 01, 13, //15
+]
+
+//currently placeholder
+var candies = [                                                       //variable that will hold our candies
+//01  02  03  04  05  06  07  08  09  10  11  12  13  14  15
+  11, 01, 01, 08, 01, 01, 01, 08, 01, 01, 01, 08, 01, 01, 02, //01
+  12, 11, 02, 12, 15, 14, 03, 12, 15, 14, 03, 12, 15, 02, 12, //02
+  12, 06, 11, 10, 14, 14, 17, 10, 17, 14, 14, 10, 02, 05, 12, //03
+  08, 14, 09, 11, 14, 03, 12, 16, 12, 15, 14, 02, 07, 14, 08, //04
+  12, 16, 12, 12, 11, 14, 09, 12, 06, 14, 02, 12, 12, 16, 12, //05
+  12, 05, 12, 05, 12, 16, 12, 06, 14, 03, 12, 05, 12, 05, 12, //06
+  08, 14, 10, 17, 13, 12, 07, 17, 17, 14, 10, 17, 10, 14, 08, //07
+  12, 15, 03, 12, 15, 13, 07, 08, 09, 11, 03, 12, 15, 03, 12, //08
+  08, 14, 17, 10, 17, 14, 10, 10, 09, 12, 11, 10, 17, 14, 08, //09
+  12, 16, 12, 16, 12, 15, 14, 02, 12, 05, 12, 16, 12, 16, 12, //10
+  12, 05, 12, 12, 06, 14, 02, 12, 07, 14, 13, 12, 12, 05, 12, //11
+  08, 14, 09, 06, 01, 03, 12, 05, 12, 15, 14, 13, 07, 14, 08, //12
+  12, 11, 06, 17, 14, 14, 10, 17, 10, 14, 14, 17, 13, 02, 12, //13
+  12, 06, 13, 12, 15, 01, 03, 12, 15, 01, 01, 12, 06, 13, 12, //14
+  06, 01, 01, 08, 01, 01, 01, 08, 01, 01, 01, 08, 01, 01, 13, //15
 ]
 
 function draw() {
@@ -136,7 +156,7 @@ function draw() {
   selected = grid.filter(cell => (cell.i === cursorX && cell.j === cursorY))[0];         //define player object
   selected.highlight();                                                                  //mark player blue
   grid[grid.length - 1].highlight(true);                                                 //mark last cell red
-  if (grid[grid.length - 1].id === selected.id) reset();                                 //on player touch, reset
+  if (grid[grid.length - 1].id === selected.id) reset();                                 //reset on player touch red
 
 }
 
