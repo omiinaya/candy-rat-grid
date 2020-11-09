@@ -134,49 +134,6 @@ function draw() {
 
 }
 
-// CHOOSE RANDOM NEIGHBOR
-/*
-var neighbor = current.randomNeighbor();
-var mergedSet, removedSet, removedIndex;
-if (neighbor) {
-  // FIND THE SETS THAT CURRENT AND NEIGHBOR ARE IN
-  for (var i = 0; i < sets.length; i++) {
-    if (sets[i].includes(current.id)) {
-      mergedSet = sets[i];
-    }
-    else if (sets[i].includes(neighbor.id)) {
-      removedSet = sets[i];
-      removedIndex = i;
-    }
-  }
-  // ADD NEIGHBOR TO CURRENT SET (UNION THE CELLS) AND DELETE NEIGHBOR'S SET
-  if (removedSet !== undefined) {
-    for (var i = 0; i < removedSet.length; i++) {
-      mergedSet.push(removedSet[i]);
-    }
-    sets.splice(removedIndex, 1);
-    // REMOVE WALLS FROM BETWEEN CURRENT AND NEIGHBOR
-    removeWalls(current, neighbor);
-  }
-} else if (sets.length > 1) {
-  current.isFinished = true;
-  available = available.filter(cell => cell.id !== current.id);
-}
-}
-// need to adjust to iterate not randomize.
-current = available[int(random(0, available.length))];
-} else {
-selected = grid.filter(cell => (cell.i === cursorX && cell.j === cursorY))[0];
-selected.highlight();                                                                  //mark player blue
-grid[grid.length - 1].highlight(true);                                                 //mark last cell red
-if (grid[grid.length - 1].id === selected.id) reset();                                 //if you reach the end, reset.
-}
-
-}
-*/
-
-// cell.i == x coord
-//cell.j == y coord
 function keyPressed() {
   if (key == 'R' || key == 'r') {
     //cursorX = 0;
