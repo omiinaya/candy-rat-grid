@@ -1,55 +1,34 @@
 var cols, rows;
-var w = 20;                               //width of each cell
+var w = 20;                                       //width of each cell
 var grid = [];            
 var available = [];
 var current;
-var cursorX = 1;                          //starting x coordinate of player
-var cursorY = 1;                          //starting y coordinate of player
+var cursorX = 0;                                  //starting x coordinate of player
+var cursorY = 0;                                  //starting y coordinate of player
 var selected;
 var sets = [];
 var wallsRemoved = 0;
 
 function setup() {
-  createCanvas(300, 300);                 //canvas width and hegiht
-  cols = floor(width/w);                  //columns = 300/20 = 15
-  rows = floor(height/w);                 //rows = 300/20 = 15
+  createCanvas(300, 300);                         //canvas width and hegiht
+  cols = floor(width/w);                          //columns = 300/20 = 15
+  rows = floor(height/w);                         //rows = 300/20 = 15
 
-  for (var j = 0; j < rows; j++) {        //for loop runs 15 times to create 15 rows
-    for (var i = 0; i < cols; i++) {      //for loop runs 15 times to create 15 cols
-      var cell = new Cell(i, j);          //class that defines the cell
-      grid.push(cell);                    //pushing cell to grid
-      sets.push([cell.id])                ////unsure what sets is for.
+  for (var j = 0; j < rows; j++) {                //for loop runs 15 times to create 15 rows
+    for (var i = 0; i < cols; i++) {              //for loop runs 15 times to create 15 cols
+      var cell = new Cell(i, j);                  //class that defines the cell
+      grid.push(cell);                            //pushing cell to grid
+      sets.push([cell.id])                        ////unsure what sets is for.
     }
   }
-  available = grid;
-  current = grid[int(random(0,(rows*cols)))];
-}
-
-function reset() {
-  grid = [];
-  cursorX = 0;
-  cursorY = 0;
-  sets = [];
-  wallsRemoved = 0;
-  for (var j = 0; j < rows; j++) {
-    for (var i = 0; i < cols; i++) {
-      var cell = new Cell(i, j);
-      grid.push(cell);
-      sets.push([cell.id])
-    }
-  }
-  available = grid;
+  available = grid;                               //saving
   current = grid[int(random(0,(rows*cols)))];
 }
 
 function draw() {
   background("#000000");
-  for (var i = 0; i < grid.length; i++) {
-    grid[i].show();
-    stroke('#FFFFFF');
-    strokeWeight(4);
-    noFill();
-    strokeWeight(1);
+  for (var i = 0; i < grid.length; i++) {         //for every element in the grid
+    grid[i].show();                               //draw grid
   }
 
   if (wallsRemoved < cols*rows - 1) {
@@ -145,4 +124,21 @@ function removeWalls(a, b) {
     b.walls[0] = false;
   }
   wallsRemoved++;
+}
+
+function reset() {
+  grid = [];
+  cursorX = 0;
+  cursorY = 0;
+  sets = [];
+  wallsRemoved = 0;
+  for (var j = 0; j < rows; j++) {
+    for (var i = 0; i < cols; i++) {
+      var cell = new Cell(i, j);
+      grid.push(cell);
+      sets.push([cell.id])
+    }
+  }
+  available = grid;
+  current = grid[int(random(0,(rows*cols)))];
 }
