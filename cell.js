@@ -5,6 +5,15 @@ function Cell(i, j) {
   this.id = i * cols + (j + 1);
   this.isFinished = false; // TRUE IF ALL NEIGHBORS ARE IN SAME SET
 
+  this.test = function() {
+    if (i == 0) {
+      this.walls = [true, false, false, false];
+    }
+    if (i == 1) {
+      this.walls = [false, false, false, false];
+    }
+  }
+
   this.isUnioned = function (neighbor) {
     for (var i = 0; i < sets.length; i++) {
       if (sets[i].includes(this.id) && sets[i].includes(neighbor.id)) {
@@ -28,7 +37,7 @@ function Cell(i, j) {
     if (this.walls[1] && right && !this.isUnioned(right)) {
       neighbors.push(right);
     }
-    if (this.walls[2] && bottom && !this.isUnionedbottom) {
+    if (this.walls[2] && bottom && !this.isUnioned(bottom)) {
       neighbors.push(bottom);
     }
     if (this.walls[3] && left && !this.isUnioned(left)) {
@@ -62,7 +71,7 @@ function Cell(i, j) {
     }
   }
 
-  
+
   this.highlight = function (isRed) {
     var x = this.i * w;
     var y = this.j * w;
