@@ -54,8 +54,7 @@ function draw() {
             mergedSet.push(removedSet[i]);
           }
           sets.splice(removedIndex,1);
-          // REMOVE WALLS FROM BETWEEN CURRENT AND NEIGHBOR
-          removeWalls(current, neighbor);
+         
         }
       } else if (sets.length > 1) {
         current.isFinished = true;
@@ -106,25 +105,6 @@ function index(i, j) {
 }
 
 
-function removeWalls(a, b) {
-  var x = a.i - b.i;
-  if (x === 1) {
-    a.walls[3] = false;
-    b.walls[1] = false;
-  } else if (x === -1) {
-    a.walls[1] = false;
-    b.walls[3] = false;
-  }
-  var y = a.j - b.j;
-  if (y === 1) {
-    a.walls[0] = false;
-    b.walls[2] = false;
-  } else if (y === -1) {
-    a.walls[2] = false;
-    b.walls[0] = false;
-  }
-  wallsRemoved++;
-}
 
 function reset() {
   grid = [];
