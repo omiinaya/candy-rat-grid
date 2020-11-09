@@ -162,26 +162,6 @@ function keyPressed() {
   }
 }
 
-function removeWalls(current, neighbor) {
-  var x = current.i - neighbor.i;
-  if (x === 1) {
-    current.walls[3] = false;
-    neighbor.walls[1] = false;
-  } else if (x === -1) {
-    current.walls[1] = false;
-    neighbor.walls[3] = false;
-  }
-  var y = current.j - neighbor.j;
-  if (y === 1) {
-    current.walls[0] = false;
-    neighbor.walls[2] = false;
-  } else if (y === -1) {
-    current.walls[2] = false;
-    neighbor.walls[0] = false;
-  }
-  wallsRemoved++;
-}
-
 function reset() {
   grid = [];
   cursorX = 0;

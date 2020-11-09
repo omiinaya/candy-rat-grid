@@ -3,25 +3,6 @@ function Cell(i, j) {
   this.j = j;
   this.walls = [true, true, true, true];
   this.id = i * cols + (j + 1);
-  this.isFinished = false; // TRUE IF ALL NEIGHBORS ARE IN SAME SET
-
-  this.test = function() {
-    if (i == 0) {
-      this.walls = [true, false, false, false];
-    }
-    if (i == 1) {
-      this.walls = [false, false, false, false];
-    }
-  }
-
-  this.isUnioned = function (neighbor) {
-    for (var i = 0; i < sets.length; i++) {
-      if (sets[i].includes(this.id) && sets[i].includes(neighbor.id)) {
-        return true;
-      }
-    }
-    return false;
-  }
 
   this.randomNeighbor = function () {
     var neighbors = [];
@@ -31,16 +12,16 @@ function Cell(i, j) {
     var bottom = grid[index(i, j + 1)];
     var left = grid[index(i - 1, j)];
 
-    if (this.walls[0] && top && !this.isUnioned(top)) {
+    if (this.walls[0] && top) {
       neighbors.push(top);
     }
-    if (this.walls[1] && right && !this.isUnioned(right)) {
+    if (this.walls[1] && right) {
       neighbors.push(right);
     }
-    if (this.walls[2] && bottom && !this.isUnioned(bottom)) {
+    if (this.walls[2] && bottom) {
       neighbors.push(bottom);
     }
-    if (this.walls[3] && left && !this.isUnioned(left)) {
+    if (this.walls[3] && left) {
       neighbors.push(left);
     }
 
@@ -51,7 +32,6 @@ function Cell(i, j) {
       return undefined;
     }
 
-
   }
 
   this.rightNeighbor = function () {
@@ -59,7 +39,7 @@ function Cell(i, j) {
 
     var right = grid[index(i + 1, j)];
   
-    if (this.walls[1] && right && !this.isUnioned(right)) {
+    if (this.walls[1] && right) {
       neighbors.push(right);
     }
 
@@ -96,12 +76,6 @@ function Cell(i, j) {
     }
     if (this.walls[3]) {
       line(x, y + w, x, y);
-    }
-
-    if (this.visited) {
-      noStroke();
-      fill(255, 0, 255, 100);
-      rect(x, y, w, w);
     }
   }
 }
