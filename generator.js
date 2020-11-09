@@ -48,9 +48,9 @@ function draw() {
     grid[i].show();
     stroke('#FFFFFF');
     strokeWeight(4);
-    noFill();
-    circle(150,150, 200);
-    circle(150,150, 100);
+    //noFill();
+    //circle(150,150, 200);
+    //circle(150,150, 100);
     strokeWeight(1);
   }
 
