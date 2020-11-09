@@ -34,6 +34,24 @@ function Cell(i, j) {
 
   }
 
+  this.topNeighbor = function () {
+    var neighbors = [];
+
+    var top = grid[index(i, j - 1)];
+  
+    if (this.walls[0] && top) {
+      neighbors.push(top);
+    }
+
+    if (neighbors.length > 0) {
+      var r = floor(random(0, neighbors.length));
+      return neighbors[r];
+    } else {
+      return undefined;
+    }
+  }
+
+
   this.rightNeighbor = function () {
     var neighbors = [];
 
@@ -41,6 +59,40 @@ function Cell(i, j) {
   
     if (this.walls[1] && right) {
       neighbors.push(right);
+    }
+
+    if (neighbors.length > 0) {
+      var r = floor(random(0, neighbors.length));
+      return neighbors[r];
+    } else {
+      return undefined;
+    }
+  }
+
+  this.bottomNeighbor = function () {
+    var neighbors = [];
+
+    var bottom = grid[index(i, j + 1)];
+  
+    if (this.walls[2] && bottom) {
+      neighbors.push(bottom);
+    }
+
+    if (neighbors.length > 0) {
+      var r = floor(random(0, neighbors.length));
+      return neighbors[r];
+    } else {
+      return undefined;
+    }
+  }
+
+  this.leftNeighbor = function () {
+    var neighbors = [];
+
+    var left = grid[index(i - 1, j)];
+  
+    if (this.walls[3] && left) {
+      neighbors.push(left);
     }
 
     if (neighbors.length > 0) {

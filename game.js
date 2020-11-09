@@ -1,8 +1,3 @@
-//
-//                                                
-//GENERAL NOTES                                   //walls in grid object are defined as [0]top, [1]right, [2]bottom, [3]left.
-//                                            
-//
 var cols, rows;
 var w = 20;                                       //width of each cell
 var grid = [];                                    //grid object
@@ -25,7 +20,7 @@ function setup() {
   }
 }
 
-var layout = [
+var layout = [                                    //variable that holds our map
   11, 1, 1, 8, 1, 1, 1, 8, 1, 1, 1, 8, 1, 1, 2,
   12, 11, 2, 12, 0, 0, 12, 12, 12, 0, 0, 12, 15, 2, 12,
   12, 6, 11, 8, 14, 14, 14, 8, 14, 14, 14, 8, 2, 5, 12,
@@ -45,9 +40,8 @@ var layout = [
 
 function draw() {
   background("#000000");                          //sets background black
-  for (var i = 0; i < grid.length; i++) {         //for every element in the grid
+  for (var i = 0; i < grid.length; i++) {         //for every element in the grid...
     grid[i].show();                               //draw grid
-
 
     //order: top, right, bottom, left
 
@@ -120,16 +114,19 @@ function draw() {
     else if (layout[i] == 14) {
       grid[i].walls = [true, false, true, false]
     }
+
+    //top, bottom, left
     else if (layout[i] == 15) {
       grid[i].walls=  [true, false, true, true]
     }
+
   }
 
   //defines selected to allow player movement
-  selected = grid.filter(cell => (cell.i === cursorX && cell.j === cursorY))[0];
+  selected = grid.filter(cell => (cell.i === cursorX && cell.j === cursorY))[0];         //define player object
   selected.highlight();                                                                  //mark player blue
   grid[grid.length - 1].highlight(true);                                                 //mark last cell red
-  if (grid[grid.length - 1].id === selected.id) reset();                                 //on red touch, reset
+  if (grid[grid.length - 1].id === selected.id) reset();                                 //on player touch, reset
 
 }
 
