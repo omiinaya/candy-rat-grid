@@ -1,24 +1,24 @@
 var cols, rows;
-var w = 20;
-var grid = [];
+var w = 20;                               //width of each cell
+var grid = [];            
 var available = [];
 var current;
-var cursorX = 0;
-var cursorY = 0;
+var cursorX = 1;                          //starting x coordinate of player
+var cursorY = 1;                          //starting y coordinate of player
 var selected;
 var sets = [];
 var wallsRemoved = 0;
 
 function setup() {
-  createCanvas(300, 300);
-  cols = floor(width/w);
-  rows = floor(height/w);
+  createCanvas(300, 300);                 //canvas width and hegiht
+  cols = floor(width/w);                  //columns = 300/20 = 15
+  rows = floor(height/w);                 //rows = 300/20 = 15
 
-  for (var j = 0; j < rows; j++) {
-    for (var i = 0; i < cols; i++) {
-      var cell = new Cell(i, j);
-      grid.push(cell);
-      sets.push([cell.id])
+  for (var j = 0; j < rows; j++) {        //for loop runs 15 times to create 15 rows
+    for (var i = 0; i < cols; i++) {      //for loop runs 15 times to create 15 cols
+      var cell = new Cell(i, j);          //class that defines the cell
+      grid.push(cell);                    //pushing cell to grid
+      sets.push([cell.id])                ////unsure what sets is for.
     }
   }
   available = grid;
@@ -48,9 +48,7 @@ function draw() {
     grid[i].show();
     stroke('#FFFFFF');
     strokeWeight(4);
-    //noFill();
-    //circle(150,150, 200);
-    //circle(150,150, 100);
+    noFill();
     strokeWeight(1);
   }
 
