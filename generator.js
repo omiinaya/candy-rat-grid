@@ -5,13 +5,11 @@
 //
 var cols, rows;
 var w = 20;                                       //width of each cell
-var grid = [];
-var available = [];
-var current;
+var grid = [];                                    //grid object
+var sets = []
 var cursorX = 0;                                  //starting x coordinate of player
 var cursorY = 0;                                  //starting y coordinate of player
 var selected;
-var sets = [];
 var wallsRemoved = 0;                             //keeps count to remove a total of 255 walls
 
 function setup() {
@@ -26,26 +24,24 @@ function setup() {
       sets.push([cell.id])                        ////unsure what sets is for.
     }
   }
-  available = grid;                               //saving as available
-  current = grid[0];
 }
 
 var layout = [
   11, 1, 1, 8, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 2,
-  12, 11, 2, 12, 0, 0, 12, 0, 12, 0, 0, 12, 11, 2, 9, 
-  12, 6, 11, 8, 0, 0, 0, 0, 0, 0, 0, 8, 2, 13, 9, 
-  8, 14, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 14, 9, 
-  12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
-  12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
-  8, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 9, 
-  12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
-  8, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 9, 
-  12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
-  12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 
-  8, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 14, 9, 
-  12, 11, 2, 12, 0, 0, 0, 0, 0, 0, 0, 12, 11, 2, 9, 
-  12, 6, 13, 12, 0, 0, 12, 0, 12, 0, 0, 12, 6, 13, 9, 
-  6, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 13, 
+  12, 11, 2, 12, 0, 0, 12, 0, 12, 0, 0, 12, 11, 2, 9,
+  12, 6, 11, 8, 0, 0, 0, 0, 0, 0, 0, 8, 2, 13, 9,
+  8, 14, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 14, 9,
+  12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9,
+  12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9,
+  8, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 9,
+  12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9,
+  8, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 9,
+  12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9,
+  12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9,
+  8, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 14, 9,
+  12, 11, 2, 12, 0, 0, 0, 0, 0, 0, 0, 12, 11, 2, 9,
+  12, 6, 13, 12, 0, 0, 12, 0, 12, 0, 0, 12, 6, 13, 9,
+  6, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 13,
 ]
 
 function draw() {
@@ -53,13 +49,13 @@ function draw() {
   for (var i = 0; i < grid.length; i++) {         //for every element in the grid
     grid[i].show();                               //draw grid
 
-    
+
     //order: top, right, bottom, left
-    
+
     //top, bottom
     if (layout[i] == 1) {
-    grid[i].walls = [true, false, true, false] 
-    } 
+      grid[i].walls = [true, false, true, false]
+    }
 
     //top, right
     else if (layout[i] == 2) {
@@ -125,24 +121,16 @@ function draw() {
     else if (layout[i] == 14) {
       grid[i].walls = [true, false, true, false]
     }
-}
-
-
-
-  if (wallsRemoved < cols * rows - 1) {           //checks if any walls have been removed at all
-    //defines selected to allow player movement
-    selected = grid.filter(cell => (cell.i === cursorX && cell.j === cursorY))[0];
-    selected.highlight();                                                                  //mark player blue
-    grid[grid.length - 1].highlight(true);                                                 //mark last cell red
-    if (grid[grid.length - 1].id === selected.id) reset();
-
-    if (!current.isFinished) {                    //if there are no walls to be removed
-      
-
-      //selected.walls = [false, false, false, false]
-    }
   }
+
+  //defines selected to allow player movement
+  selected = grid.filter(cell => (cell.i === cursorX && cell.j === cursorY))[0];
+  selected.highlight();                                                                  //mark player blue
+  grid[grid.length - 1].highlight(true);                                                 //mark last cell red
+  if (grid[grid.length - 1].id === selected.id) reset();
+
 }
+
 // CHOOSE RANDOM NEIGHBOR
 /*
 var neighbor = current.randomNeighbor();
