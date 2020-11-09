@@ -1,3 +1,6 @@
+//                                                //walls are counted [0]top, [1]right, [2]bottom, [3]left.
+//GENERAL NOTES 
+//
 var cols, rows;
 var w = 20;                                       //width of each cell
 var grid = [];            
@@ -21,7 +24,7 @@ function setup() {
       sets.push([cell.id])                        ////unsure what sets is for.
     }
   }
-  available = grid;                               //saving
+  available = grid;                               //saving as available
   current = grid[int(random(0,(rows*cols)))];
 }
 
@@ -54,14 +57,15 @@ function draw() {
             mergedSet.push(removedSet[i]);
           }
           sets.splice(removedIndex,1);
-         
+          // REMOVE WALLS FROM BETWEEN CURRENT AND NEIGHBOR
+          removeWalls(current, neighbor);
         }
       } else if (sets.length > 1) {
         current.isFinished = true;
         available = available.filter(cell => cell.id !== current.id);
       }
     }
-    // GET NEW CURRENT (RANDOM)
+    // need to adjust to iterate not randomize.
     current = available[int(random(0,available.length))];
   } else {
     selected = grid.filter(cell => (cell.i === cursorX && cell.j === cursorY))[0];
@@ -81,18 +85,26 @@ function keyPressed() {
   else if ((key == 'W' || key == 'w') && cursorY > 0) {
     if(!selected.walls[0]) {
       cursorY--;
+      console.log(grid)
+      console.log(selected)
     }
   } else if ((key == 'A' || key == 'a') && cursorX > 0) {
     if(!selected.walls[3]) {
       cursorX--;
+      console.log(grid)
+      console.log(selected)
     }
   } else if ((key == 'S' || key == 's') && cursorY < rows-1) {
     if(!selected.walls[2]) {
       cursorY++;
+      console.log(grid)
+      console.log(selected)
     }
   } else if ((key == 'D' || key == 'd') && cursorX < cols-1) {
     if(!selected.walls[1]) {
       cursorX++;
+      console.log(grid)
+      console.log(selected)
     }
   }
 }
@@ -105,6 +117,25 @@ function index(i, j) {
 }
 
 
+function removeWalls(a, b) {
+  var x = a.i - b.i;
+  if (x === 1) {
+    a.walls[3] = false;
+    b.walls[1] = false;
+  } else if (x === -1) {
+    a.walls[1] = false;
+    b.walls[3] = false;
+  }
+  var y = a.j - b.j;
+  if (y === 1) {
+    a.walls[0] = false;
+    b.walls[2] = false;
+  } else if (y === -1) {
+    a.walls[2] = false;
+    b.walls[0] = false;
+  }
+  wallsRemoved++;
+}
 
 function reset() {
   grid = [];
