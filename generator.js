@@ -1,5 +1,7 @@
+//
 //                                                //walls in grid object are defined as [0]top, [1]right, [2]bottom, [3]left.
-//GENERAL NOTES                                   
+//GENERAL NOTES                                   //isFinished means there are no walls to be removed.
+//                                                //neighbor and current are individual cells. currently picked at random.
 //
 var cols, rows;
 var w = 20;                                       //width of each cell
@@ -10,7 +12,7 @@ var cursorX = 0;                                  //starting x coordinate of pla
 var cursorY = 0;                                  //starting y coordinate of player
 var selected;
 var sets = [];
-var wallsRemoved = 0;
+var wallsRemoved = 0;                             //keeps count to remove a total of 255 walls
 
 function setup() {
   createCanvas(300, 300);                         //canvas width and hegiht
@@ -26,17 +28,19 @@ function setup() {
   }
   available = grid;                               //saving as available
   current = grid[int(random(0,(rows*cols)))];
+  console.log(current);
 }
 
 function draw() {
-  background("#000000");
+  background("#000000");                          //sets background black
   for (var i = 0; i < grid.length; i++) {         //for every element in the grid
     grid[i].show();                               //draw grid
   }
 
-  if (wallsRemoved < cols*rows - 1) {
-    if (!current.isFinished) {
-      current.highlight();
+  
+  if (wallsRemoved < cols*rows - 1) {             //checks if any walls have been removed at all
+    if (!current.isFinished) {                    //if there are no walls to be removed
+      current.highlight();                        //makes targeted cell blue
       // CHOOSE RANDOM NEIGHBOR
       var neighbor = current.randomNeighbor();
       var mergedSet, removedSet, removedIndex;
@@ -69,12 +73,13 @@ function draw() {
     current = available[int(random(0,available.length))];
   } else {
     selected = grid.filter(cell => (cell.i === cursorX && cell.j === cursorY))[0];
-    selected.highlight();
+    selected.highlight();                                                               //makes player blue
     grid[grid.length-1].highlight(true);
-    if(grid[grid.length-1].id === selected.id) reset();
+    if(grid[grid.length-1].id === selected.id) reset();                                 //if you reach the end, reset.
   }
 
 }
+
 // cell.i == x coord
 //cell.j == y coord
 function keyPressed() {
@@ -84,27 +89,27 @@ function keyPressed() {
   }
   else if ((key == 'W' || key == 'w') && cursorY > 0) {
     if(!selected.walls[0]) {
-      cursorY--;
-      console.log(grid)
       console.log(selected)
+      cursorY--;
+      //console.log(grid)
     }
   } else if ((key == 'A' || key == 'a') && cursorX > 0) {
     if(!selected.walls[3]) {
-      cursorX--;
-      console.log(grid)
       console.log(selected)
+      cursorX--;
+      //console.log(grid)
     }
   } else if ((key == 'S' || key == 's') && cursorY < rows-1) {
     if(!selected.walls[2]) {
-      cursorY++;
-      console.log(grid)
       console.log(selected)
+      cursorY++;
+      //console.log(grid)
     }
   } else if ((key == 'D' || key == 'd') && cursorX < cols-1) {
     if(!selected.walls[1]) {
-      cursorX++;
-      console.log(grid)
       console.log(selected)
+      cursorX++;
+      //console.log(grid)
     }
   }
 }
@@ -117,22 +122,22 @@ function index(i, j) {
 }
 
 
-function removeWalls(a, b) {
-  var x = a.i - b.i;
+function removeWalls(current, neighbor) {
+  var x = current.i - neighbor.i;
   if (x === 1) {
-    a.walls[3] = false;
-    b.walls[1] = false;
+    current.walls[3] = false;
+    neighbor.walls[1] = false;
   } else if (x === -1) {
-    a.walls[1] = false;
-    b.walls[3] = false;
+    current.walls[1] = false;
+    neighbor.walls[3] = false;
   }
-  var y = a.j - b.j;
+  var y = current.j - neighbor.j;
   if (y === 1) {
-    a.walls[0] = false;
-    b.walls[2] = false;
+    current.walls[0] = false;
+    neighbor.walls[2] = false;
   } else if (y === -1) {
-    a.walls[2] = false;
-    b.walls[0] = false;
+    current.walls[2] = false;
+    neighbor.walls[0] = false;
   }
   wallsRemoved++;
 }
